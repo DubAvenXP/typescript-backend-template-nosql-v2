@@ -1,0 +1,35 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "app.js",
+            "use": "@vercel/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/v1/users(.*)",
+            "dest": "/app.js"
+        },
+        {
+            "src": "/api/v1/clients(.*)",
+            "dest": "/app.js"
+        },
+        {
+            "src": "/api/v1/photographies(.*)",
+            "dest": "/app.js"
+        },
+        {
+            "src": "/api/v1/productions(.*)",
+            "dest": "/app.js"
+        },
+        {
+            "src": "/api/v1/messages(.*)",
+            "dest": "/app.js"
+        },
+        {
+            "src": "/api/v1/auth(.*)",
+            "dest": "/app.js"
+        }
+    ]
+}
