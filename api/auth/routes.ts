@@ -62,4 +62,4 @@ router.get("/verify", validateJWT, async (req: any, res: Response) => {
     success(req, res, { token: renewToken }, 200);
 });
 
-module.exports = router;
+export default router;
