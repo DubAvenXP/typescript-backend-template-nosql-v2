@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { config } from '../config';
+import { config } from '../../config';
 
 export const generateJWT = (id = '', expiresIn = config.jwt.expiresIn) => {
     return new Promise((resolve, reject) => {

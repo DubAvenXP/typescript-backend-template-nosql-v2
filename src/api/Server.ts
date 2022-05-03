@@ -1,7 +1,7 @@
 import express, { Application } from "express";
 import cors from "cors";
 import helmet from "helmet";
-import { config } from "../config";
+import { config } from "../../config";
 import { Paths } from "../interfaces";
 import { dbConnection } from "../database/config";
 

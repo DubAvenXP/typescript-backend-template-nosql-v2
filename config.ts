@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { Environment } from "./interfaces";
+import { Environment } from "./src/interfaces";
 dotenv.config({
     path: `.env.${process.env.NODE_ENV}`,
 });
