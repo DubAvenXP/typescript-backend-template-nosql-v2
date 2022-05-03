@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import { config } from "../config";
 
-const URI = `mongodb+srv://${config.mongo?.user}:${config.mongo?.password}@${config.mongo?.host}/${config.mongo?.name}`;
+const { host, name, password, user } = config.mongo;
+
+const URI = `mongodb+srv://${user}:${password}@${host}/${name}`;
 
 export const dbConnection = async () => {
     try {

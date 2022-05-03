@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
+import { UserMoongose } from './model'
 
-const userSchema = new Schema({
+const userSchema = new Schema<UserMoongose>({
     name: {
         type: String,
         required: true
@@ -37,9 +38,4 @@ const userSchema = new Schema({
     }
 });
 
-userSchema.methods.toJSON = function () {
-    const { __v, password, ...user } = this.toObject();
-    return user;
-};
-
-export const User = model('User', userSchema);
+export const User = model<UserMoongose>('User', userSchema);

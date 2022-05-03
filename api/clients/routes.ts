@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express";
 import { check } from "express-validator";
-import { err, success } from "../../helpers";
 
 import {
     validate,
@@ -8,22 +7,14 @@ import {
     generateUrl,
     projections,
 } from "../../middlewares";
-import { User as Model } from "../models";
 
 const router = express.Router();
 
-// import { Client as Model } from "./schema";
-
-import network from "../network"
-const { list, add, update, remove } = network(Model);
+import { list, listOne, add, update, remove } from "./controller";
 
 router.get("/", [projections({ __v: 0, createdAt: 0, updatedAt: 0 })], list);
 
-router.get(
-    "/:url",
-    [check("url", "Invalid client url").notEmpty(), validate],
-    listOne
-);
+router.get("/:id", [check("id", "Invalid id").notEmpty(), validate], listOne);
 
 router.post(
     "/",
@@ -50,24 +41,5 @@ router.delete(
     [validateJWT, check("id", "Invalid id").notEmpty().isMongoId(), validate],
     remove
 );
-
-async function listOne(req: Request, res: Response) {
-    try {
-        const { url } = req.params;
-        const client = await Model.findOne(
-            { url },
-            { __v: 0, createdAt: 0, updatedAt: 0, status: 0 }
-        );
-        success(req, res, client, 200);
-    } catch (error) {
-        console.error(error);
-        err(
-            req,
-            res,
-            error,
-            500,
-        );
-    }
-}
 
 module.exports = router;

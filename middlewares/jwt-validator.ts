@@ -18,14 +18,11 @@ export const validateJWT = async (req: any, res: Response, next: NextFunction) =
     try {
         const { sub } = jwt.verify(token, secret);
         const user = await User.findById(sub);
-        //Usuario existe?
         if (!user) {
-            return res.status(401).json({ message: 'Invalid token' });
+            return res.status(401).json({ msg: 'Invalid token!' });
         }
-
-        //Verificar estado del usuario
         if (!user.status) {
-            return res.status(401).json({ message: 'Invalid token - talk to the administrator' });
+            return res.status(401).json({ msg: 'Invalid token - talk to the administrator' });
         }
 
         req.user = user;

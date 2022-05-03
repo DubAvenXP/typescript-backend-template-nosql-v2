@@ -1,4 +1,4 @@
-import { BaseModel } from "./../../utils/base.models";
+import { BaseModel } from "../../interfaces";
 
 export interface ClientI extends BaseModel {
     name: string;
@@ -10,5 +10,12 @@ export interface ClientI extends BaseModel {
 
 export interface ClientMoongose extends Omit<ClientI, "id"> {}
 
+export interface GetClientDto
+    extends Omit<ClientI, "createdAt" | "status" | "updatedAt"> {}
 export interface CreateClientDTO
-    extends Omit<ClientI, "id" | "status" | "createdAt" | "updatedAt"> {}
+    extends Omit<ClientI, "id" | "status" | "createdAt" | "updatedAt" > {}
+
+export interface UpdateClientDTO
+    extends Partial<
+        Omit<ClientI, "id" | "status" | "updatedAt" | "createdAt">
+    > {}

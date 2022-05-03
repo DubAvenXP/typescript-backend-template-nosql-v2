@@ -1,23 +1,21 @@
 import express from "express";
 import { check } from "express-validator";
-
 import { emailExist } from "../../helpers";
-import { validate, validateJWT, encriptPassword } from "../../middlewares";
+
+import {
+    validate,
+    validateJWT,
+    projections,
+    encriptPassword,
+} from "../../middlewares";
 
 const router = express.Router();
 
-import { User as Model } from "./schema";
+import { list, listOne, add, update, remove } from "./controller";
 
-import network from "../network";
-const { list, listOne, add, update, remove } = network(Model);
+router.get("/", [projections({ __v: 0, createdAt: 0, updatedAt: 0 })], list);
 
-router.get("/", validateJWT, list);
-
-router.get(
-    "/:id",
-    [validateJWT, check("id", "Invalid id").notEmpty().isMongoId(), validate],
-    listOne
-);
+router.get("/:id", [check("id", "Invalid id").notEmpty(), validate], listOne);
 
 router.post(
     "/",
