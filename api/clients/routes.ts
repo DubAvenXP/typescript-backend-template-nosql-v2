@@ -8,11 +8,11 @@ import {
     generateUrl,
     projections,
 } from "../../middlewares";
-import { Client } from "../models";
+import { User as Model } from "../models";
 
 const router = express.Router();
 
-import { Client as Model } from "./schema";
+// import { Client as Model } from "./schema";
 
 import network from "../network"
 const { list, add, update, remove } = network(Model);
@@ -54,7 +54,7 @@ router.delete(
 async function listOne(req: Request, res: Response) {
     try {
         const { url } = req.params;
-        const client = await Client.findOne(
+        const client = await Model.findOne(
             { url },
             { __v: 0, createdAt: 0, updatedAt: 0, status: 0 }
         );
@@ -70,4 +70,4 @@ async function listOne(req: Request, res: Response) {
     }
 }
 
-export default router;
+module.exports = router;

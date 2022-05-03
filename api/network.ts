@@ -1,14 +1,14 @@
 
 import { Request, Response } from 'express';
 import { err, success } from '../helpers';
-import service from './../database/methods';
+import dbMethods from '../database/service';
 
 export default function (Model: any) {
-  const { get, getOne, post, put, removes } = service(Model);
+  const service = dbMethods(Model);
 
   async function list(req: Request, res: Response) {
     try {
-      const result = await get(req);
+      const result = await service.get(req);
       success(req, res, result, 200);
     } catch (error) {
       console.error(error);
@@ -18,7 +18,7 @@ export default function (Model: any) {
 
   async function listOne(req: Request, res: Response) {
     try {
-      const result = await getOne(req);
+      const result = await service.getOne(req);
       success(req, res, result, 200);
     } catch (error) {
       console.error(error);
@@ -28,7 +28,7 @@ export default function (Model: any) {
 
   async function add(req: Request, res: Response) {
     try {
-      const result = await post(req);
+      const result = await service.post(req);
       success(req, res, result, 201);
     } catch (error) {
       console.error(error);
@@ -38,7 +38,7 @@ export default function (Model: any) {
 
   async function update(req: Request, res: Response) {
     try {
-      const result = await put(req);
+      const result = await service.put(req);
       success(req, res, result, 200);
     } catch (error) {
       console.error(error);
@@ -48,7 +48,7 @@ export default function (Model: any) {
 
   async function remove(req: Request, res: Response) {
     try {
-      const result = await removes(req);
+      const result = await service.remove(req);
       success(req, res, result, 200);
     } catch (error) {
       console.error(error);

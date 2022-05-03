@@ -4,7 +4,7 @@ import bcryptjs from "bcryptjs";
 
 import { User as Model } from "../models";
 
-import service from "../../database/methods";
+import service from "../../database/service";
 const { get } = service(Model);
 
 import { err, success } from "../../helpers";
@@ -62,4 +62,4 @@ router.get("/verify", validateJWT, async (req: any, res: Response) => {
     success(req, res, { token: renewToken }, 200);
 });
 
-export default router;
+module.exports = router;

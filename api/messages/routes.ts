@@ -17,4 +17,4 @@ router.post('/', [
     validate,
 ], sendEmail);
 
-export default router;
+module.exports = router;

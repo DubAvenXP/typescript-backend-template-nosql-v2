@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
+import { ClientMoongose } from './model'
 
-const clientSchema = new Schema({
+const clientSchema = new Schema<ClientMoongose>({
     name: {
         type: String,
         required: true
@@ -19,11 +20,9 @@ const clientSchema = new Schema({
     },
     logo: {
         type: String,
-        required: false,
     },
     status: {
         type: Boolean,
-        required: true,
         default: true
     },
     createdAt: {
@@ -38,4 +37,4 @@ const clientSchema = new Schema({
     }
 });
 
-export const Client = model('Client', clientSchema);
+export const Client = model<ClientMoongose>('Client', clientSchema);

@@ -1,6 +1,6 @@
-import { Schema, model } from 'mongoose';
+import { Model } from 'mongoose';
 
-export default function (Model = model('', new Schema({}))) {
+export default function (model: Model<any>) {
 
     const get = async (req: any) => {
         const filter = req.query || {};
@@ -10,12 +10,12 @@ export default function (Model = model('', new Schema({}))) {
         const projection = req.projections || {};
         const populate = req.dataToPopulate || [];
 
-        !projection.status ? projection.status = 0 : delete projection.status;
+        projection.status === 1 ? projection.status = 0 : delete projection.status;
         projection.createdAt === 1 ? projection.createdAt = 0 : delete projection.createdAt;
-        !projection.updatedAt ? projection.updatedAt = 0 : delete projection.updatedAt;
-        !projection.__v ? projection.__v = 0 : delete projection.__v;
+        projection.updatedAt === 1 ? projection.updatedAt = 0 : delete projection.updatedAt;
+        projection.__v === 1 ? projection.__v = 0 : delete projection.__v;
 
-        const data = await Model.find(filter, projection).populate(populate);
+        const data = await model.find(filter, projection).populate(populate);
         return {
             data
         };
@@ -32,13 +32,13 @@ export default function (Model = model('', new Schema({}))) {
         if (!projection.__v) projection.__v = 0;
 
 
-        const item = await Model.findById(id, projection).populate(populate);
+        const item = await model.findById(id, projection).populate(populate);
         return item;
     };
 
     const post = async (req: any) => {
         const { body } = req;
-        const item = new Model(body);
+        const item = new model(body);
         await item.save();
         return item;
     };
@@ -46,13 +46,13 @@ export default function (Model = model('', new Schema({}))) {
     const put = async (req: any) => {
         const { id } = req.params;
         const {status, ...payload} = req.body;
-        await Model.findByIdAndUpdate(id, payload, { new: true, runValidators: true });
+        await model.findByIdAndUpdate(id, payload, { new: true, runValidators: true });
         return getOne(req);
     };
 
-    const removes = async (req: any) => {
+    const remove = async (req: any) => {
         const { id } = req.params;
-        await Model.findByIdAndUpdate(id, { status: false }, { new: true });
+        await model.findByIdAndUpdate(id, { status: false }, { new: true });
         return getOne(req);
     };
 
@@ -61,7 +61,7 @@ export default function (Model = model('', new Schema({}))) {
         getOne,
         post,
         put,
-        removes
+        remove
     };
 };
 
