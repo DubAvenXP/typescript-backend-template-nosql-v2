@@ -126,6 +126,6 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/node
 
-
+src/database/mongo-data
 database/products.csv
 database/products.json

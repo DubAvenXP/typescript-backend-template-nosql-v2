@@ -24,7 +24,7 @@ router.post(
         check("name", "Invalid name").notEmpty(),
         check("email", "Invalid email").notEmpty().isEmail().custom(emailExist),
         check("password", "Invalid password").notEmpty().isLength({ min: 8 }),
-        check("role", "Invalid role")
+        check("role", "Invalid role, must be admin_role or user_role")
             .notEmpty()
             .isIn(["admin_role", "user_role"]),
         validate,

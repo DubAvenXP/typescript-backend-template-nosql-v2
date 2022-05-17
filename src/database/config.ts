@@ -3,7 +3,11 @@ import { config } from '../../config';
 
 const { host, name, password, user } = config.mongo;
 
-const URI = `mongodb+srv://${user}:${password}@${host}/${name}`;
+let URI: string;
+
+config.env === 'production' ?
+    URI = `mongodb+srv://${user}:${password}@${host}/${name}` :
+    URI = `mongodb://${user}:${password}@${host}/${name}`;
 
 export const dbConnection = async () => {
     try {
