@@ -18,6 +18,7 @@ class Server {
             auth: "/api/v1/auth",
             messages: "/api/v1/messages",
             clients: "/api/v1/clients",
+            companies: "/api/v1/companies",
         };
 
         this.connectDB();
@@ -48,6 +49,7 @@ class Server {
         this.app.use(this.paths.auth, require("../api/auth/routes"));
         this.app.use(this.paths.messages, require("../api/messages/routes"));
         this.app.use(this.paths.clients, require("../api/clients/routes"));
+        this.app.use(this.paths.companies, require("../api/companies/routes"));
     }
 
     listen() {

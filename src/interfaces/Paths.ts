@@ -3,4 +3,5 @@ export interface Paths {
     auth: string;
     messages: string;
     clients: string;
+    companies: string;
 };

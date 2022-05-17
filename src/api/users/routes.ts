@@ -5,7 +5,6 @@ import { emailExist } from "../../helpers";
 import {
     validate,
     validateJWT,
-    projections,
     encriptPassword,
 } from "../../middlewares";
 
@@ -13,9 +12,13 @@ const router = express.Router();
 
 import { list, listOne, add, update, remove } from "./controller";
 
-router.get("/", [projections({ __v: 0, createdAt: 0, updatedAt: 0 })], list);
+router.get("/", list);
 
-router.get("/:id", [check("id", "Invalid id").notEmpty(), validate], listOne);
+router.get(
+    "/:id",
+    [check("id", "Invalid id").notEmpty().isMongoId(), validate],
+    listOne
+);
 
 router.post(
     "/",
@@ -27,6 +30,9 @@ router.post(
         check("role", "Invalid role, must be admin_role or user_role")
             .notEmpty()
             .isIn(["admin_role", "user_role"]),
+        check("company", "Invalid company, must be a valid mongo id")
+            .optional()
+            .isMongoId(),
         validate,
         encriptPassword,
     ],

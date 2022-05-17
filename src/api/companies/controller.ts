@@ -4,20 +4,18 @@ import { err, success } from "../../helpers";
 
 import dbMethods from "../../database/services";
 
-import { User } from "./schema";
-import { CreateUserDTO, UpdateUserDTO, GetUserDto } from "./model";
+import { Company } from "./schema";
+import { CreateCompanyDTO, UpdateCompanyDTO, GetCompanyDto } from "./model";
 
-const service = dbMethods(User);
+const service = dbMethods(Company);
 
 export async function list(req: Request, res: Response) {
     try {
         const { query } = req.query;
-        const projection = { password: 0 };
-        const populate: any[] = [
-            { path: "company", select: "name email phone address" },
-        ];
+        const projection = {};
+        const populate: any[] = [];
 
-        const result = await service.get<GetUserDto>({
+        const result = await service.get<GetCompanyDto>({
             query,
             projection,
             populate,
@@ -33,12 +31,10 @@ export async function list(req: Request, res: Response) {
 export async function listOne(req: Request, res: Response) {
     try {
         const { id } = req.params;
-        const projection = { password: 0 };
-        const populate: any[] = [
-            { path: "company", select: "name email" },
-        ];
+        const projection = {};
+        const populate: any[] = [];
 
-        const result = await service.getOne<GetUserDto>(id, {
+        const result = await service.getOne<GetCompanyDto>(id, {
             projection,
             populate,
         });
@@ -51,12 +47,11 @@ export async function listOne(req: Request, res: Response) {
 
 export async function add(req: Request, res: Response) {
     try {
-        const payload: CreateUserDTO = req.body;
-        const result = await service.post<GetUserDto, CreateUserDTO>(payload);
-        const data = await service.getOne<GetUserDto>(result._id, {
-            projection: { password: 0 },
-        });
-        success(req, res, data, 201);
+        const payload: CreateCompanyDTO = req.body;
+        const result = await service.post<GetCompanyDto, CreateCompanyDTO>(
+            payload
+        );
+        success(req, res, result, 201);
     } catch (error) {
         console.error(error);
         err(req, res, error, 500);
@@ -65,16 +60,13 @@ export async function add(req: Request, res: Response) {
 
 export async function update(req: Request, res: Response) {
     try {
-        const payload: UpdateUserDTO = req.body;
+        const payload: UpdateCompanyDTO = req.body;
         const { id } = req.params;
-        await service.put<GetUserDto, UpdateUserDTO>(
+        const result = await service.put<GetCompanyDto, UpdateCompanyDTO>(
             id,
             payload
         );
-        const data = await service.getOne<GetUserDto>(id, {
-            projection: { password: 0 },
-        });
-        success(req, res, data, 200);
+        success(req, res, result, 200);
     } catch (error) {
         console.error(error);
         err(req, res, error, 500);
@@ -84,11 +76,8 @@ export async function update(req: Request, res: Response) {
 export async function remove(req: Request, res: Response) {
     try {
         const { id } = req.params;
-        await service.remove<GetUserDto>(id);
-        const data = await service.getOne<GetUserDto>(id, {
-            projection: { password: 0 },
-        });
-        success(req, res, data, 200);
+        const result = await service.remove<GetCompanyDto>(id);
+        success(req, res, result, 200);
     } catch (error) {
         console.error(error);
         err(req, res, error, 500);

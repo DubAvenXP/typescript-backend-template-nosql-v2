@@ -1,4 +1,5 @@
 import { BaseModel } from "../../interfaces";
+import { CompanyI } from "../companies/model";
 
 export enum Roles {
     USER_ROLE = "user_role",
@@ -10,6 +11,7 @@ export interface UserI extends BaseModel {
     email: string;
     password: string;
     role: 'user_role' | 'admin_role';
+    company: CompanyI;
 }
 
 export interface UserMoongose extends Omit<UserI, "id"> {}

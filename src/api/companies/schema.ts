@@ -1,34 +1,29 @@
 import { Schema, model } from 'mongoose';
-import { UserMoongose } from './model'
+import { CompanyMoongose } from './model'
 
-const userSchema = new Schema<UserMoongose>({
+const companySchema = new Schema<CompanyMoongose>({
     name: {
         type: String,
         required: true
     },
-    email: {
+    url: {
         type: String,
         required: true,
-        unique: true
     },
-    password: {
-        type: String,
-        required: false
-    },
-    role: {
+    address: {
         type: String,
         required: true,
-        default: 'user_role',
-        enum: ['user_role', 'admin_role']
     },
-    company: {
-        type: Schema.Types.ObjectId,
-        ref: 'Company',
-        required: false
+    phone: {
+        type: String,
+        required: true,
+    },
+    image: {
+        type: String,
+        required: true
     },
     status: {
         type: Boolean,
-        required: true,
         default: true
     },
     createdAt: {
@@ -43,4 +38,4 @@ const userSchema = new Schema<UserMoongose>({
     }
 });
 
-export const User = model<UserMoongose>('User', userSchema);
+export const Company = model<CompanyMoongose>('Company', companySchema);
